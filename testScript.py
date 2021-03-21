@@ -116,10 +116,11 @@ def runScript(username):
     os.environ["SPOTIPY_CLIENT_SECRET"] = 'ac001e1fac7944e5a786637484adb5d1' # Secret ID
     os.environ["SPOTIPY_REDIRECT_URI"] = 'http://localhost:7777/callback' # Redirect URI
 
-    client_credentials_manager = SpotifyClientCredentials(client_id="SPOTIPY_CLIENT_ID",client_secret="SPOTIPY_CLIENT_SECRET")
-    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     scope = 'playlist-modify-private playlist-modify-public user-follow-read user-library-read' # scope needed for your programme 
     token = util.prompt_for_user_token(username, scope)
+    
+    client_credentials_manager = SpotifyClientCredentials(client_id="SPOTIPY_CLIENT_ID",client_secret="SPOTIPY_CLIENT_SECRET")
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     if token:
       sp = spotipy.Spotify(auth=token)
     else:
