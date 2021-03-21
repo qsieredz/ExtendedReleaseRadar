@@ -118,7 +118,7 @@ def runScript(username):
 
     client_credentials_manager = SpotifyClientCredentials(client_id="SPOTIPY_CLIENT_ID",client_secret="SPOTIPY_CLIENT_SECRET")
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-    scope = 'playlist-modify-private playlist-modify-public user-follow-read' # scope needed for your programme 
+    scope = 'playlist-modify-private playlist-modify-public user-follow-read user-library-read' # scope needed for your programme 
     token = util.prompt_for_user_token(username, scope)
     if token:
       sp = spotipy.Spotify(auth=token)
