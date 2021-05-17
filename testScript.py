@@ -3,7 +3,6 @@ from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 import spotipy.util as util
 import os
 import datetime
-import json
 
 
 date_time = datetime.datetime.today() - datetime.timedelta(days=7)
@@ -17,6 +16,8 @@ def processAlbum(newAlbums, results, spotify):
     for album in albums:
         if (album['release_date'] > str(date_time)):
             newAlbums.append(album['id'])
+        else:
+            return newAlbums
     return newAlbums
 
 def checkIfNewAlbums(artistId):
@@ -34,36 +35,32 @@ def checkIfNewAlbums(artistId):
     return newAlbums
 
 
-def generateFollowingArtistIdList(scope):
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
-
-    results = sp.current_user_followed_artists(limit=50)
-    resultString = json.dumps(results)
-    split = resultString.split('https://open.spotify.com/artist/')
+def generateFollowingArtistIdList(sp):
     followedArtistsId = []
-
-
-    for i in range (1, len(split)):
-        id = split[i].split('\"')
-        followedArtistsId.append(id[0])
-
-    while len(split) > 1: 
-        results = sp.current_user_followed_artists(limit=50, after=followedArtistsId[len(followedArtistsId) - 1])
-        resultString = json.dumps(results)
-        split = resultString.split('https://open.spotify.com/artist/')
-        for i in range (1, len(split)):
-            id = split[i].split('\"')
-            followedArtistsId.append(id[0])
+    
+    results = sp.current_user_followed_artists(limit=50)
+    listOfA = results['artists']
+    next = listOfA['cursors']['after']
+    x = listOfA['items']
+    for i in x:
+        followedArtistsId.append(i['id'])
+    
+    while next != None:
+        results = sp.current_user_followed_artists(limit=50, after=next)
+        listOfA = results['artists']
+        next = listOfA['cursors']['after']
+        x = listOfA['items']
+        for i in x:
+            followedArtistsId.append(i['id'])
+            
     return followedArtistsId
 
-def createNewPlaylist(scope):
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+def createNewPlaylist(sp):
     user_id = sp.me()['id']
-    playlistId = sp.user_playlist_create(user_id, 'New Songs for the Week')
+    playlistId = sp.user_playlist_create(user_id, 'Extended Release Radar')
     return playlistId
 
-def makeSurePlaylistExists(scope, username):
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+def makeSurePlaylistExists(sp, username):
     user_id = sp.me()['id']
     allPlaylists = []
 
@@ -72,7 +69,7 @@ def makeSurePlaylistExists(scope, username):
 
     for playlist in playlists['items']:
         allPlaylists.append(playlist['name'])
-        if playlist['name'] == 'New Songs for the Week':
+        if playlist['name'] == 'Extended Release Radar':
             playlistId = playlist
 
     while(len(playlists['items']) != 0 ):
@@ -80,18 +77,18 @@ def makeSurePlaylistExists(scope, username):
 
         for playlist in playlists['items']:
             allPlaylists.append(playlist['name'])
-            if (playlist['name'] == 'New Songs for the Week'):
+            if (playlist['name'] == 'Extended Release Radar'):
                 playlistId = playlist
     if (playlistId != None):
         sp.current_user_unfollow_playlist(playlistId['id'])
-    playlistId = createNewPlaylist(scope)
+    playlistId = createNewPlaylist(sp)
         
     return playlistId
 
-def fillPlaylist(playlistId, albumId, artistId, scope):
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+def fillPlaylist(playlistId, albumId, artistId, sp):
     songArray = []
-
+    # print("Hello")
+    
     results = sp.album_tracks(albumId)
     songs = results['items']
 
@@ -99,10 +96,12 @@ def fillPlaylist(playlistId, albumId, artistId, scope):
         results = sp.next(results)
         songs.extend(results['items'])
 
+#         Makes sure that only songs with the artist are added to the playlist
     for song in songs:
-        songString = json.dumps(song)
-        if str(artistId) in songString:
-            songArray.append(song['id'])
+        for artist in song['artists']:
+            if(artist['id'] == artistId):
+                songArray.append(song['id'])
+    
     sp.playlist_add_items(playlistId, songArray)
 
 
@@ -112,30 +111,29 @@ def runScript(username):
     # username = "mr_q_5" # INSERT YOUR USERNAME HERE
     print(username)
 
-    os.environ["SPOTIPY_CLIENT_ID"] = '67bafffe4ec743408a81a7ceb10106b5' # client id
-    os.environ["SPOTIPY_CLIENT_SECRET"] = 'ac001e1fac7944e5a786637484adb5d1' # Secret ID
-    os.environ["SPOTIPY_REDIRECT_URI"] = 'http://localhost:7777/callback' # Redirect URI
+
 
     scope = 'playlist-modify-private playlist-modify-public user-follow-read user-library-read' # scope needed for your programme 
     token = util.prompt_for_user_token(username, scope)
     
-    client_credentials_manager = SpotifyClientCredentials(client_id="SPOTIPY_CLIENT_ID",client_secret="SPOTIPY_CLIENT_SECRET")
-    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     if token:
-      sp = spotipy.Spotify(auth=token)
+        sp = spotipy.Spotify(auth=token)
     else:
       return("Can't get token for " + username)
       quit()
 
-    playlist = makeSurePlaylistExists(scope, username)
+    playlist = makeSurePlaylistExists(sp, username)
     playlistId = playlist["id"]
 
     artistId = '2AfU5LYBVCiCtuCCfM7uVX'
 
-    followedArtistsId = generateFollowingArtistIdList(scope)
+    followedArtistsId = generateFollowingArtistIdList(sp)
     for artistId in followedArtistsId:
       albumId = checkIfNewAlbums(artistId)
       # print(albumId)
       for album in albumId:
-          fillPlaylist(playlistId, album, artistId, scope)
+          fillPlaylist(playlistId, album, artistId, sp)
     print("Done")
+
+def test(username):
+    return username
