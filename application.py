@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect
-application = Flask(__name__)
+application = Flask(__name__, static_url_path='/static')
 
 @application.route('/')
 def index():
