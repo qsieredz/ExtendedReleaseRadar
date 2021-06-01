@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template, redirect
-application = Flask(__name__, static_url_path='/static')
+from whitenoise import WhiteNoise
+application = Flask(__name__)
+application.wsgi_app = WhiteNoise(app.wsgi_app, root='static/')
 
 @application.route('/')
 def index():
