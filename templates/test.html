@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='pianopic.css') }}">
 <style>
 body,h1,h2{font-family: "Raleway", sans-serif}
 body, html {height: 100%}
@@ -18,19 +19,11 @@ p {line-height: 2}
 .text {
     background-color: black;
 }
-.bgimg {background-image: url("/static/piano.jpg")}
 .palepink {
   color: #FFF0ED;
 }
 </style>
 <body>
-
-<!-- Header / Home-->
-<header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
-  <div class="w3-display-middle w3-text-white w3-center">
-    <h2><div class="text"> Extended Release Radar for Spotify</h2>
-  </div>
-</header>
 
 <!-- Navbar (sticky bottom) -->
 <div class="w3-bottom w3-hide-small">
@@ -40,6 +33,16 @@ p {line-height: 2}
     <a href="#about" style="width:25%" class="w3-bar-item w3-button">About Us</a>
     <a href="#support" style="width:25%" class="w3-bar-item w3-button w3-hover-black">Support Us</a>
   </div>
+</div>
+
+<!-- Initial Title / Picture -->
+<div class="w3-container w3-padding-64 w3-black w3-grayscale-min" id="home">
+    <div class="container">
+      <img src="{{url_for('static',filename='piano.jpg')}}" alt="Man Playing the Piano" style="width:100%;">
+      <div class="w3-display-middle w3-text-white w3-center">
+        <h2><div class="text"> Extended Release Radar for Spotify</h2>
+      </div>
+    </div>
 </div>
 
 <!-- Run the script -->
@@ -69,7 +72,7 @@ p {line-height: 2}
 <div class="w3-container w3-padding-64 w3-pale-red w3-grayscale-min" id="support">
   <div class="w3-content">
     <h1 class="w3-center w3-text-black"><b>Support Us</b></h1>
-    <p class="w3-text-black"><i>To Be Added!</i>
+    <p class="w3-text-black"><i>Insert Text Here</i>
     </p><br>
   </div>
 </div>
