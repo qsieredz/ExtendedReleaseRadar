@@ -125,8 +125,6 @@ def runScript():
     playlist = makeSurePlaylistExists(sp, username)
     playlistId = playlist["id"]
 
-    artistId = '2AfU5LYBVCiCtuCCfM7uVX'
-
     followedArtistsId = generateFollowingArtistIdList(sp)
     for artistId in followedArtistsId:
       albumId = checkIfNewAlbums(artistId)
