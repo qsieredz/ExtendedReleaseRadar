@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-  return render_template('test.html')
+  return render_template('index.html')
 
 @app.route('/working')
 def working():
@@ -12,8 +12,8 @@ def working():
 
 @app.route('/run')
 def my_form_post():
-    import testScript
-    error = testScript.runScript('mr_q_5')
+    import script
+    error = script.runScript('mr_q_5')
     if error is not None:
         return error
     return redirect('/')
