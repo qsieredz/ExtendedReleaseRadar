@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<title>Extended Release Radar</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1,h2{font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+p {line-height: 2}
+.bgimg, .bgimg2 {
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-color: black;
+}
+.text {
+    background-color: black;
+}
+/*.bgimg {background-image: url("static/piano.jpg")}*/
+.bgimg {
+  background-image: url({{ url_for('static', filename='/piano.jpg') }})
+.palepink {
+  color: #FFF0ED;
+}
+</style>
+<body>
+
+<!-- Header / Home-->
+<header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
+  <div class="w3-display-middle w3-text-white w3-center">
+    <h2><div class="text"> Extended Release Radar for Spotify</h2>
+  </div>
+</header>
+
+<!-- Navbar (sticky bottom) -->
+<div class="w3-bottom w3-hide-small">
+  <div class="w3-bar w3-white w3-center w3-padding w3-opacity-min w3-hover-opacity-off">
+    <a href="#home" style="width:25%" class="w3-bar-item w3-button">Home</a>
+    <a href="#generate" style="width:25%" class="w3-bar-item w3-button">Generate Your Playlist</a>
+    <a href="#about" style="width:25%" class="w3-bar-item w3-button">About Us</a>
+    <a href="#support" style="width:25%" class="w3-bar-item w3-button w3-hover-black">Support Us</a>
+  </div>
+</div>
+
+<!-- Run the script -->
+<div class="w3-container w3-padding-64 w3-pale-red w3-grayscale-min" id="generate">
+  <div class="w3-content">
+    <h1 class="w3-center w3-text-black"><b>Generate Playlist</b></h1>
+    <p class="w3-text-black"><i>Are you annoyed that Spotify's Release Radar only shows one song per artist? Are you missing songs or albums by artists you love? Use "Extended Release Radar" to fix this! Click the button below to generate your weekly playlist of every song by every artist you follow.<br><br>
+    Important notes: This application will generate every song released in the last week by the artists you follow into a playlist called "Extended Release Radar." If you rerun the program, it will override the playlist. You must follow an artist on Spotify for their songs to appear. Songs may be duplicated if you follow two artists featured on the same song, or if the artist releases more than one version of a song (ie. explicit and clean). Also, very occasionally, songs may be missing if the artist is featured weirdly.<br><br>
+    The playlist is not generated automatically. You must click the button every time you want a new playlist. Also, generating the playlist may take a few minutes depending on how many artists you follow.</i>
+    </p><br>
+    <p class="w3-center"><a href="/run" class="w3-button w3-black w3-round w3-padding-large w3-large">Generate your Playlist</a></p>
+  </div>
+</div>
+
+<!-- About Us -->
+<div class="w3-container w3-padding-64 w3-black w3-grayscale-min" id="about">
+  <div class="w3-content">
+    <h1 class="w3-center w3-text-white"><b>About Us</b></h1>
+    <p><i>This project started out of the Hackathon <a href="https://ncsupackhacks.org/">PackHacks</a> in March 2021. Details about the first version of the project is available <a href="https://devpost.com/software/extended-release-radar"> here</a>.<br><br>
+    The program works by using a python script that uses the Spotify API and the Spotipy API to generate the playlist. Then, Flask is used to run the project. <a href="https://www.w3schools.com/w3css/w3css_templates.asp"> W3School</a> was used to facilate the creation of the HTML website.<br><br>
+    A full write up of the program is available FIXME here, and the Github Repo for the project is available FIXME: here.</i>
+    </p><br>
+  </div>
+</div>
+
+<!-- Donate Plz -->
+<div class="w3-container w3-padding-64 w3-pale-red w3-grayscale-min" id="support">
+  <div class="w3-content">
+    <h1 class="w3-center w3-text-black"><b>Support Us</b></h1>
+    <p class="w3-text-black"><i>Insert Text Here</i>
+    </p><br>
+  </div>
+</div>
+
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16">
+  <p> </a></p>
+</footer>
+<div class="w3-hide-small" style="margin-bottom:32px"> </div>
+
+</body>
+</html>
