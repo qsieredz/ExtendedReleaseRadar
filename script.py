@@ -87,7 +87,6 @@ def makeSurePlaylistExists(sp, username):
 
 def fillPlaylist(playlistId, albumId, artistId, sp):
     songArray = []
-    # print("Hello")
     
     results = sp.album_tracks(albumId)
     songs = results['items']
@@ -106,15 +105,13 @@ def fillPlaylist(playlistId, albumId, artistId, sp):
 
 
 
-def runScript(username):
+def runScript():
 
-    # username = "mr_q_5" # INSERT YOUR USERNAME HERE
-    print(username)
-
-    os.environ["SPOTIPY_CLIENT_ID"] = '67bafffe4ec743408a81a7ceb10106b5' # client id
-    os.environ["SPOTIPY_CLIENT_SECRET"] = '598ed482c7ba4bc7a62e289856f4307a' # Secret ID
-    # os.environ["SPOTIPY_REDIRECT_URI"] = 'http://localhost:7777/callback' # Redirect URI
-    os.environ["SPOTIPY_REDIRECT_URI"] = 'http://extendedreleaseradar.us-east-2.elasticbeanstalk.com/' # Redirect URI
+    username = 'insert username here' # username
+    os.environ["SPOTIPY_CLIENT_ID"] = 'insert client id here' # client id
+    os.environ["SPOTIPY_CLIENT_SECRET"] = 'insert secret here' # Secret ID
+    
+    os.environ["SPOTIPY_REDIRECT_URI"] = 'http://localhost:7777/callback' # Redirect URI
 
     scope = 'playlist-modify-private playlist-modify-public user-follow-read user-library-read' # scope needed for your programme 
     token = util.prompt_for_user_token(username, scope)
@@ -133,7 +130,6 @@ def runScript(username):
     followedArtistsId = generateFollowingArtistIdList(sp)
     for artistId in followedArtistsId:
       albumId = checkIfNewAlbums(artistId)
-      # print(albumId)
       for album in albumId:
           fillPlaylist(playlistId, album, artistId, sp)
     print("Done")

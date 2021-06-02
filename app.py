@@ -8,12 +8,11 @@ def index():
 @app.route('/working')
 def working():
 	return "Creating the playlist"
-# application.add_url_rule('/', 'working', 'working_world')
 
 @app.route('/run')
 def my_form_post():
     import script
-    error = script.runScript('mr_q_5')
+    error = script.runScript()
     if error is not None:
         return error
     return redirect('/')
