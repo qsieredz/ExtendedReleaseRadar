@@ -1,5 +1,14 @@
 # ExtendedReleaseRadar
-Extended Release Radar App for Spotify
+
+**INSTRUCTIONS FOR THIS APP TO WORK**:
+1. Make sure that everything in the requirements.txt is downloaded in your environment
+2. Setup your spotify developer application 
+3. Open 'script.py', scroll to 'def runScript()'. There, insert your spotify username, your application's client id, and your application's client secret
+4. Run using command 'python app.py'
+5. Click on 'generate your playlist'
+
+
+**Extended Release Radar App for Spotify**
 
 Are you annoyed that Spotify's Release Radar only shows one song per artist? Are you missing songs or albums by artists you love? Use "Extended Release Radar" to fix this! The application will generate a playlist of every song by every artist you follow released in the last week.
 
