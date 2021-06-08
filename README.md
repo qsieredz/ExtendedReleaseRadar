@@ -1,5 +1,7 @@
 # ExtendedReleaseRadar
 
+Writeup for the app is available [here](https://quentin-sieredzki.medium.com/making-extended-release-radar-for-spotify-using-python-flask-and-the-spotipy-api-e4fabc8a72ec)
+
 **INSTRUCTIONS FOR THIS APP TO WORK**:
 1. Make sure that everything in the requirements.txt is downloaded in your environment
 2. Setup your spotify developer application 
